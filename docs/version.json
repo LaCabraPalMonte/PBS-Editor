@@ -1,5 +1,5 @@
 {
     "version": "1.0.2",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Editor visual para archivos PBS de Pokémon Essentials v21."
+    "notes": "Corrige los selectores de Growth Rate, Egg Groups, Shape, Color y Habitat: si no se pueden cargar (por ejemplo, si falta Data/Scripts o Data/Scripts.rxdata), ahora muestran un aviso claro en vez de quedarse en blanco."
 }
