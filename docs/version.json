@@ -1,5 +1,5 @@
 {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Se añade instalador (PBS_Editor_Setup.exe) además del .zip: instala PBS Editor en la carpeta PBS_Editor_Release de tu proyecto y crea accesos directos. Sin cambios funcionales respecto a la v1.0.2."
+    "notes": "PBS Editor pasa a ser una aplicación independiente: el instalador ya no se coloca dentro del proyecto, y el launcher pide (y recuerda) la carpeta raíz de tu proyecto Essentials la primera vez que se abre."
 }
