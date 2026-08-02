@@ -1,5 +1,5 @@
 {
-    "version": "1.0.2",
+    "version": "1.1.0",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Corrige los selectores de Growth Rate, Egg Groups, Shape, Color y Habitat: si no se pueden cargar (por ejemplo, si falta Data/Scripts o Data/Scripts.rxdata), ahora muestran un aviso claro en vez de quedarse en blanco."
+    "notes": "Se añade instalador (PBS_Editor_Setup.exe) además del .zip: instala PBS Editor en la carpeta PBS_Editor_Release de tu proyecto y crea accesos directos. Sin cambios funcionales respecto a la v1.0.2."
 }
