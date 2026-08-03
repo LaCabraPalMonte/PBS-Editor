@@ -1,5 +1,5 @@
 {
-    "version": "1.1.1",
+    "version": "1.1.2",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "PBS Editor pasa a ser una aplicación independiente: el instalador ya no se coloca dentro del proyecto, y el launcher pide (y recuerda) la carpeta raíz de tu proyecto Essentials la primera vez que se abre."
+    "notes": "Followers, iconos de Pokémon, encuentros y analizador de uso mejorados; varios fixes de validación y del launcher."
 }
