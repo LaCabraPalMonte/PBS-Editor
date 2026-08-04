@@ -1,0 +1,69 @@
+
+/* ============================================================
+   EVOLUCIÓN — set-piece de parallax con scroll-scrubbing
+   ============================================================ */
+.evo-wrap{position:relative; height:450vh;}
+@media (prefers-reduced-motion: reduce){ .evo-wrap{height:auto;} }
+
+/* JS-driven pin (not position:sticky -- a full-viewport-height sticky child
+   of a very tall parent is a known-fragile pattern across embedding
+   contexts; toggling absolute/fixed by scroll position is more robust). */
+.evo-sticky{
+  position:absolute; top:0; left:0; right:0; height:100vh; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(180deg, var(--sky-top), var(--sky-bottom) 85%);
+}
+.evo-sticky.m-fixed{position:fixed;}
+.evo-sticky.m-bottom{position:absolute; top:auto; bottom:0;}
+@media (prefers-reduced-motion: reduce){ .evo-sticky{position:relative; height:82vh; min-height:520px;} }
+
+.evo-layer{position:absolute; inset:0; pointer-events:none;}
+.evo-cloud{position:absolute; background:rgba(255,255,255,.5); border-radius:50%; filter:blur(1px); will-change:transform;}
+:root[data-theme="dark"] .evo-cloud{background:rgba(255,255,255,.05);}
+
+.evo-flash{
+  position:absolute; left:50%; top:52%; width:min(90vw,900px); height:min(90vw,900px);
+  transform:translate(-50%,-50%); background:radial-gradient(circle, rgba(255,255,255,.9), rgba(120,230,190,.55) 45%, transparent 72%);
+  opacity:0; will-change:opacity; mix-blend-mode:screen;
+}
+:root[data-theme="dark"] .evo-flash{mix-blend-mode:normal; background:radial-gradient(circle, rgba(255,255,255,.5), rgba(80,200,160,.35) 45%, transparent 72%);}
+
+.evo-ground{position:absolute; left:-5%; right:-5%; bottom:0; height:14vh; min-height:70px; background:var(--sky-bottom); border-radius:50% 50% 0 0 / 100% 100% 0 0; opacity:.9;}
+:root[data-theme="dark"] .evo-ground{opacity:.6;}
+
+.evo-icons-drift{position:absolute; inset:0; overflow:hidden;}
+.evo-idrift-icon{position:absolute; width:44px; height:44px; background-size:88px 44px; background-position:0 0; image-rendering:pixelated; opacity:.35; will-change:transform;}
+:root[data-theme="dark"] .evo-idrift-icon{opacity:.22;}
+
+.evo-stage{position:relative; z-index:5; display:flex; flex-direction:column; align-items:center; text-align:center; padding:0 24px; max-width:520px;}
+.evo-label{display:flex; align-items:center; gap:10px; font-family:var(--mono); margin-bottom:6px;}
+.evo-label .evo-no{font-weight:700; font-size:13px; color:var(--red-dark); background:rgba(227,53,13,.1); border:1px solid rgba(227,53,13,.25); padding:4px 10px; border-radius:999px;}
+:root[data-theme="dark"] .evo-label .evo-no{color:var(--yellow); background:rgba(255,210,63,.1); border-color:rgba(255,210,63,.3);}
+.evo-label .evo-name{font-weight:800; font-size:15px; color:var(--ink); font-family:var(--sans);}
+
+.evo-sprite-wrap{position:relative; width:360px; height:360px; display:flex; align-items:center; justify-content:center; margin:6px 0 8px;}
+.evo-sprite{position:absolute; image-rendering:pixelated; width:200px; height:200px; will-change:transform,opacity;}
+.evo-sprite.silhouette{filter:brightness(0); z-index:2;}
+.evo-sprite.color{z-index:1;}
+
+.evo-dots{display:flex; gap:7px; margin:10px 0 16px;}
+.evo-dots span{width:7px; height:7px; border-radius:50%; background:var(--line); transition:background .3s var(--ease-out2,ease), transform .3s var(--ease-out2,ease);}
+.evo-dots span.on{background:var(--red); transform:scale(1.3);}
+:root[data-theme="dark"] .evo-dots span.on{background:var(--yellow);}
+
+.evo-caption{font-size:14.5px; line-height:1.6; color:var(--ink-dim); max-width:44ch;}
+.evo-caption b{color:var(--ink);}
+
+.evo-scrollhint{position:absolute; bottom:22px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); display:flex; flex-direction:column; align-items:center; gap:4px; opacity:.8;}
+.evo-scrollhint svg{width:14px; height:14px; animation:evoBob 1.6s ease-in-out infinite;}
+@keyframes evoBob{0%,100%{transform:translateY(0);} 50%{transform:translateY(5px);}}
+@media (prefers-reduced-motion: reduce){ .evo-scrollhint{display:none;} .evo-flash{display:none;} }
+
+/* -- marquee secundaria de iconos -- */
+.icon-strip{overflow:hidden; padding:4px 0 22px; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+.icon-strip-track{display:flex; gap:0; width:max-content; animation:iconScroll 26s linear infinite;}
+.icon-strip:hover .icon-strip-track{animation-play-state:paused;}
+@keyframes iconScroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+.icon-strip-track span{width:56px; height:56px; flex:none; background-size:112px 56px; background-position:0 0; image-rendering:pixelated; opacity:.8; animation:iconBob .6s steps(1) infinite;}
+@keyframes iconBob{0%,100%{background-position:0 0;} 50%{background-position:-56px 0;}}
+@media (prefers-reduced-motion: reduce){ .icon-strip-track span{animation:none;} .icon-strip-track{animation:none;} }
