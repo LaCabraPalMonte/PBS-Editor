@@ -1,5 +1,5 @@
 {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Followers, iconos de Pokémon, encuentros y analizador de uso mejorados; varios fixes de validación y del launcher."
+    "notes": "Integración con Maker Studio: ábrelo directo sobre el proyecto que estás editando, o te lleva a descargarlo si no lo tienes instalado."
 }
