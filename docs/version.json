@@ -1,5 +1,5 @@
 {
-    "version": "1.2.0",
+    "version": "1.2.1",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Copiar/pegar una entrada completa entre dos proyectos abiertos, búsqueda global en todo el proyecto, aviso de cambios sin guardar, nombres en español en listas y etiquetas (antes se veía el ID interno), y el analizador de uso ahora agrupa líneas evolutivas sin usar y reconoce Pokémon obtenibles por fósil. El Editor de Tilesets tiene zoom, resaltado de la casilla bajo el ratón, e iconos más claros para Bush/Counter Flag, prioridad y pasabilidad."
+    "notes": "Fix importante: si abrías dos ventanas de PBS Editor a la vez (por ejemplo para copiar/pegar entre dos proyectos), la segunda mostraba el mismo proyecto que la primera en vez del que habías elegido, porque ambas compartían el mismo puerto de servidor. Ahora cada ventana usa su propio puerto y proyecto de forma independiente."
 }
