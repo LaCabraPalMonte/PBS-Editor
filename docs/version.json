@@ -1,5 +1,5 @@
 {
-    "version": "1.1.4",
+    "version": "1.1.5",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Arregla el auto-actualizador: se quedaba en \"Actualizando...\" sin aplicar el cambio (el launcher no llegaba a cerrarse del todo y bloqueaba sus propios archivos). Ahora cierra correctamente antes de sustituirlos."
+    "notes": "El analizador de objetos sin usar ahora detecta objetos de mapas (bolas de objeto, ocultos, árboles de bayas, máquinas expendedoras) y objetos en venta en tiendas y el Juego de las Monedas; antes solo contaba los que llevan los Pokémon salvajes."
 }
