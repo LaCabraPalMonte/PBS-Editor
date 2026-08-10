@@ -1,5 +1,5 @@
 {
-    "version": "1.2.2",
+    "version": "1.2.3",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Fix: si tenías más de una ventana de PBS Editor abierta, actualizar fallaba en silencio (los archivos del programa seguían en uso por la otra ventana) y volvía a abrir la misma versión vieja. Ahora te avisa con un mensaje claro si detecta otra ventana abierta, en vez de fallar sin decir nada. IMPORTANTE: cierra TODAS las ventanas de PBS Editor antes de pulsar 'Actualizar ahora' para que esta actualización concreta se aplique bien."
+    "notes": "Mejora en Copiar/Pegar entrada entre proyectos: al copiar un Pokémon o forma a otro proyecto, ahora también se llevan las habilidades y movimientos que use y no existan todavía en el destino (se crean automáticamente) y sus sprites, icon, huella y follower, si los tiene."
 }
