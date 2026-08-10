@@ -1,5 +1,5 @@
 {
-    "version": "1.2.1",
+    "version": "1.2.2",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Fix importante: si abrías dos ventanas de PBS Editor a la vez (por ejemplo para copiar/pegar entre dos proyectos), la segunda mostraba el mismo proyecto que la primera en vez del que habías elegido, porque ambas compartían el mismo puerto de servidor. Ahora cada ventana usa su propio puerto y proyecto de forma independiente."
+    "notes": "Fix: si tenías más de una ventana de PBS Editor abierta, actualizar fallaba en silencio (los archivos del programa seguían en uso por la otra ventana) y volvía a abrir la misma versión vieja. Ahora te avisa con un mensaje claro si detecta otra ventana abierta, en vez de fallar sin decir nada. IMPORTANTE: cierra TODAS las ventanas de PBS Editor antes de pulsar 'Actualizar ahora' para que esta actualización concreta se aplique bien."
 }
