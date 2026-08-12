@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Abrir PBS Editor</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<style>
+  :root{
+    --sky-top:#4EA6E8; --sky-bottom:#eaf6ff; --page:#eaf6ff; --panel:#ffffff; --line:#cfe6f7;
+    --ink:#182541; --ink-dim:#4c6079; --red:#e3350d; --red-dark:#b32307; --blue:#2f6dc4; --yellow:#ffcb05;
+    --sans: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --page:#0a1730; --panel:#122142; --line:#22345c; --ink:#eef3ff; --ink-dim:#a9bbd6; --yellow:#ffd23f; --blue:#5b9bf0;
+      color-scheme: dark;
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 70%);
+    font-family:var(--sans); color:var(--ink);
+  }
+  @media (prefers-color-scheme: dark){ body{ background:var(--page); } }
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:18px;
+    padding:40px 36px; max-width:420px; width:calc(100% - 32px); text-align:center;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.25);
+  }
+  .icon{margin:0 auto 18px;}
+  h1{font-size:20px; margin:0 0 8px; font-weight:800;}
+  p{font-size:14.5px; color:var(--ink-dim); line-height:1.55; margin:0 0 22px;}
+  code{font-family:var(--mono); font-size:12.5px; background:var(--page); border:1px solid var(--line); padding:2px 6px; border-radius:5px; word-break:break-all;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%;
+    padding:13px 20px; border-radius:10px; border:none; font:700 15px/1 var(--sans);
+    cursor:pointer; text-decoration:none; box-shadow:0 6px 0 var(--red-dark); transition:transform .1s;
+  }
+  .btn:active{transform:translateY(4px); box-shadow:0 2px 0 var(--red-dark);}
+  .btn-primary{background:var(--red); color:#fff;}
+  .btn-secondary{
+    background:transparent; color:var(--blue); box-shadow:none; margin-top:14px; font-weight:600; font-size:13.5px;
+  }
+  .status{font-size:12.5px; color:var(--ink-dim); margin-top:18px; min-height:1.4em;}
+  .error .card{border-color:var(--red);}
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <svg class="icon" width="56" height="56" viewBox="0 0 100 100" aria-hidden="true">
+      <rect x="9" y="11" width="88" height="88" rx="22" fill="#0e1a38"/>
+      <rect x="4" y="4" width="88" height="88" rx="22" fill="#2f6dc4" stroke="#182541" stroke-width="5"/>
+      <path d="M42 27 L28 27 L28 73 L42 73" fill="none" stroke="#182541" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M42 27 L28 27 L28 73 L42 73" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M58 27 L72 27 L72 73 L58 73" fill="none" stroke="#182541" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M58 27 L72 27 L72 73 L58 73" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M23 55 L23 48 L37 38 L50 48 L63 38 L77 48 L77 55 Z" fill="#e3350d" stroke="#182541" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="50" cy="50" r="9" fill="#ffcb05" stroke="#182541" stroke-width="5"/>
+    </svg>
+    <h1 id="title">Abriendo PBS Editor…</h1>
+    <p id="desc">Si tienes PBS Editor instalado, tu navegador va a pedirte permiso para abrirlo. Acepta para continuar.</p>
+    <button class="btn btn-primary" id="openBtn" type="button">Abrir PBS Editor</button>
+    <div>
+      <a class="btn btn-secondary" href="https://lacabrapalmonte.github.io/PBS-Editor/" id="downloadLink">¿No tienes PBS Editor? Descárgalo aquí</a>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    // Esta página existe porque llamar directamente a "pbseditor://..." desde
+    // un mod de MakerStudio (ctx.ui.openUrl) lanza el navegador por defecto
+    // pasándole la URI como argumento de línea de comandos -- y los
+    // navegadores basados en Chromium NO resuelven esquemas personalizados
+    // así (confirmado probando en vivo): solo lo hacen cuando una página YA
+    // CARGADA navega de verdad a ese esquema (location.href, o un gesto real
+    // del usuario como un clic). Por eso el mod abre esta URL normal
+    // (https://) en vez de "pbseditor://" directamente, y esta página hace
+    // la navegación real un segundo después.
+    const params = new URLSearchParams(location.search);
+    const path = params.get('path');
+    const statusEl = document.getElementById('status');
+    const titleEl = document.getElementById('title');
+    const descEl = document.getElementById('desc');
+    const openBtn = document.getElementById('openBtn');
+
+    if (!path) {
+      titleEl.textContent = 'Falta la carpeta del proyecto';
+      descEl.textContent = 'Este enlace debería incluir la ruta del proyecto (parámetro "path"). Ábrelo desde el mod de MakerStudio en vez de a mano.';
+      openBtn.style.display = 'none';
+    } else {
+      const targetUri = 'pbseditor://open?path=' + encodeURIComponent(path);
+      openBtn.onclick = () => { location.href = targetUri; };
+
+      // Intento automático nada más cargar. Si el navegador lo bloquea por
+      // no venir de un gesto del usuario, el botón de arriba es el respaldo
+      // (un clic siempre cuenta como gesto real).
+      setTimeout(() => { location.href = targetUri; }, 300);
+
+      setTimeout(() => {
+        statusEl.textContent = '¿No ha pasado nada? Pulsa el botón de arriba, o comprueba que tienes PBS Editor instalado.';
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
