@@ -1,5 +1,5 @@
 {
-    "version": "1.2.3",
+    "version": "1.2.4",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Mejora en Copiar/Pegar entrada entre proyectos: al copiar un Pokémon o forma a otro proyecto, ahora también se llevan las habilidades y movimientos que use y no existan todavía en el destino (se crean automáticamente) y sus sprites, icon, huella y follower, si los tiene."
+    "notes": "Corrige 3 bugs de integridad de datos en entrenadores: \"Guardar Todo\" ya persiste correctamente los cambios hechos en el modal de editar Pokémon, y guardar un Pokémon del equipo ya no borra en silencio campos no estándar (p. ej. de plugins como DBK) de los demás Pokémon del equipo. Además, nueva validación estructural para Archivos Custom PBS: detecta IDs duplicados y cabeceras de sección mal formadas."
 }
