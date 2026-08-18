@@ -1,5 +1,5 @@
 {
-    "version": "1.2.4",
+    "version": "1.2.5",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Corrige 3 bugs de integridad de datos en entrenadores: \"Guardar Todo\" ya persiste correctamente los cambios hechos en el modal de editar Pokémon, y guardar un Pokémon del equipo ya no borra en silencio campos no estándar (p. ej. de plugins como DBK) de los demás Pokémon del equipo. Nueva validación estructural para Archivos Custom PBS. Y nuevo icono \"Bracket Ball\" (el corchete [ID] de una entrada PBS dibujado como una pokébola) con la paleta de la app consolidada con la de esta web."
+    "notes": "Nuevo selector de idioma en la interfaz, con dropdown de banderas en la barra de navegación: español, inglés, español latinoamericano y francés. Corrige además un bug por el que las banderas del selector no se veían (el icono se quedaba con altura 0 por una regla CSS)."
 }
