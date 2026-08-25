@@ -1,5 +1,5 @@
 {
-    "version": "1.3.0",
+    "version": "1.3.1",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Ficha exportable estilo TCG para Discord/Twitter-X (PNG o GIF animado, variante shiny), Cobertura de Tipos del Equipo, Comparador de Entradas con iconos y radar de stats, filtros avanzados combinables en las listas, detector de Movimientos Huérfanos, autocompletado en archivos PBS custom, aviso de cambios externos al archivo y botón para cambiar de proyecto sin reiniciar la app. Corrige también el CRUD de Encuentros (llevaba meses roto) y varias pérdidas de datos al guardar."
+    "notes": "Ficha exportable estilo TCG rediseñada a la proporción real de una carta física, calcada de las plantillas oficiales de pokecardmaker.net: vuelven los ataques (con coste de energía y daño tomados del PBS), insignia de fase, pie de debilidad/resistencia/retirada, y datos de ilustrador/rareza/nº de set. Nuevos interruptores de acabado Holo, Reverse y Carta EX (arte a toda la carta), combinables entre sí. Corrige también la lista de fondos de combate disponibles al exportar la ficha, que se quedaba vacía en muchos proyectos aunque sí tuvieran battlebacks."
 }
