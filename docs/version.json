@@ -1,5 +1,5 @@
 {
-    "version": "1.3.1",
+    "version": "1.3.2",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Ficha exportable estilo TCG rediseñada a la proporción real de una carta física, calcada de las plantillas oficiales de pokecardmaker.net: vuelven los ataques (con coste de energía y daño tomados del PBS), insignia de fase, pie de debilidad/resistencia/retirada, y datos de ilustrador/rareza/nº de set. Nuevos interruptores de acabado Holo, Reverse y Carta EX (arte a toda la carta), combinables entre sí. Corrige también la lista de fondos de combate disponibles al exportar la ficha, que se quedaba vacía en muchos proyectos aunque sí tuvieran battlebacks."
+    "notes": "Corrige un bug importante: guardar un tipo de entrenador con música de Intro/Batalla/Victoria no hacía nada (el guardado se rompía en silencio). También arregla la búsqueda del selector de música, el reconocimiento de pistas .mid, un backdrop que podía quedarse colgado al reabrir el selector, y un campo Name inválido al crear un entrenador nuevo."
 }
