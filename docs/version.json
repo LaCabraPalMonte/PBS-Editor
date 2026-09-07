@@ -1,5 +1,5 @@
 {
-    "version": "1.3.2",
+    "version": "1.3.3",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Corrige un bug importante: guardar un tipo de entrenador con música de Intro/Batalla/Victoria no hacía nada (el guardado se rompía en silencio). También arregla la búsqueda del selector de música, el reconocimiento de pistas .mid, un backdrop que podía quedarse colgado al reabrir el selector, y un campo Name inválido al crear un entrenador nuevo."
+    "notes": "Nueva sección para editar bayas (berry_plants.txt), con vista previa del árbol de la planta y enlace a la wiki. Arrastra y suelta una imagen para dar de alta un character nuevo en el Animador de Characters. Al editar un Pokémon del equipo de un entrenador ahora se ven sus tipos, BST y cadena evolutiva completa (con aviso si el nivel puesto no cuadra con la especie), y cada entrenador muestra los iconos de su equipo en la lista. Corrige un bug real de datos en Naturaleza (guardaba nombres en español no reconocidos por el motor, y varias tenían mal asignados sus efectos), la lista de Metadatos de Mapa que no mostraba todos los mapas del proyecto, el animador de la planta de una baya que podía resetear el proyecto al pulsar sus botones, y el cierre de la ventana con cambios sin guardar, que podía quedarse congelado."
 }
