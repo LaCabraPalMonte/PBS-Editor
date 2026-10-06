@@ -1,5 +1,5 @@
 {
-    "version": "1.3.5",
+    "version": "1.3.6",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Nuevo: transferir Pokémon entre entrenadores. Desde el equipo de un entrenador puedes copiar o mover un Pokémon ya configurado, o el equipo entero (o solo parte, p. ej. todo menos el starter del rival), a otro entrenador, también de otro archivo trainers_xxx.txt. Si el destino ya tiene equipo, eliges si reemplazarlo o completarlo, delante o detrás para mantener al as al final, y con cuáles se queda si no caben todos. Al editar un Pokémon de un entrenador, el selector de movimientos sugiere los que aprende de verdad (por nivel, MT/tutor y huevo) y rellena los de por defecto de su nivel, el de habilidad muestra las de la especie con su descripción, y se avisa si le pones algo que no puede aprender. El equipo se puede reordenar arrastrando."
+    "notes": "Nuevo: filtros por Generación y Tipo en las Pokédex regionales, para montar una dex más rápido (p. ej. filtra la Generación 1, marca Todos y añádelos de golpe; el botón >> añade solo lo filtrado). Corregido: ya se pueden subir sprites de Pokémon (Front, Back, Icons, Footprints y sus shiny) e iconos de objetos, que siempre fallaban con \"Ocurrió un error al subir el sprite\". Corregido: en las Pokédex regionales, pulsar sobre el nombre de un Pokémon ya lo selecciona (antes solo funcionaba la casilla)."
 }
