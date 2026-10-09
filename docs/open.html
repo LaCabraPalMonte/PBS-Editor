@@ -82,8 +82,18 @@
     // del usuario como un clic). Por eso el mod abre esta URL normal
     // (https://) en vez de "pbseditor://" directamente, y esta página hace
     // la navegación real un segundo después.
-    const params = new URLSearchParams(location.search);
-    const path = params.get('path');
+    //
+    // La ruta llega en el fragmento (open.html#<ruta con encodeURIComponent>),
+    // no como "?path=": Maker Studio abre las URLs con explorer.exe, y
+    // explorer trata el "=" como separador de sus propios parámetros -- con
+    // "?path=..." o "#path=..." abría la carpeta Documentos en vez del
+    // navegador (confirmado probando en vivo). "?path=" se sigue aceptando
+    // para quien llegue con el formato antiguo desde otro sitio.
+    const hash = location.hash.slice(1);
+    let path = new URLSearchParams(location.search).get('path');
+    if (hash) {
+      try { path = decodeURIComponent(hash); } catch (e) { path = null; }
+    }
     const statusEl = document.getElementById('status');
     const titleEl = document.getElementById('title');
     const descEl = document.getElementById('desc');
