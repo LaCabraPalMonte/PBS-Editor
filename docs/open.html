@@ -105,16 +105,47 @@
       openBtn.style.display = 'none';
     } else {
       const targetUri = 'pbseditor://open?path=' + encodeURIComponent(path);
-      openBtn.onclick = () => { location.href = targetUri; };
+      let launched = false;
+      let lostFocus = false;
+      let closing = false;
+      const launch = () => { launched = true; location.href = targetUri; };
+      openBtn.onclick = launch;
 
       // Intento automático nada más cargar. Si el navegador lo bloquea por
       // no venir de un gesto del usuario, el botón de arriba es el respaldo
       // (un clic siempre cuenta como gesto real).
-      setTimeout(() => { location.href = targetUri; }, 300);
+      setTimeout(launch, 300);
 
       setTimeout(() => {
-        statusEl.textContent = '¿No ha pasado nada? Pulsa el botón de arriba, o comprueba que tienes PBS Editor instalado.';
+        if (!closing) {
+          statusEl.textContent = '¿No ha pasado nada? Pulsa el botón de arriba, o comprueba que tienes PBS Editor instalado.';
+        }
       }, 2500);
+
+      // Cerrar la pestaña cuando PBS Editor ya se ha abierto. NO se cierra al
+      // perder el foco: el diálogo "¿Abrir PBS Editor?" del navegador también
+      // quita el foco a la página, y cerrar la pestaña con ese diálogo abierto
+      // lo descarta y PBS Editor no llega a abrirse. Se cierra al RECUPERAR el
+      // foco: justo después de aceptar el diálogo (el navegador ya ha lanzado
+      // PBS Editor por su cuenta, cerrar la pestaña no lo cancela), o, si no
+      // hubo diálogo, cuando el usuario vuelve al navegador.
+      window.addEventListener('blur', () => { if (launched) lostFocus = true; });
+      window.addEventListener('focus', () => {
+        if (!lostFocus || closing) return;
+        closing = true;
+        titleEl.textContent = 'PBS Editor se está abriendo';
+        descEl.textContent = 'Esta pestaña se cerrará sola.';
+        statusEl.textContent = '';
+        setTimeout(() => {
+          // Los navegadores solo dejan cerrar por script las pestañas sin
+          // historial previo, que es como llega esta desde Maker Studio. Si
+          // aun así sigue abierta, se avisa para cerrarla a mano.
+          window.close();
+          setTimeout(() => {
+            descEl.textContent = 'Ya puedes cerrar esta pestaña.';
+          }, 300);
+        }, 800);
+      });
     }
   </script>
 </body>
