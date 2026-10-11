@@ -1,5 +1,5 @@
 {
-    "version": "1.3.9.2",
+    "version": "1.3.10",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Corregido: al abrir PBS Editor desde Maker Studio ya ves el aviso cuando hay una versión nueva. Antes arrancaba el editor sin esperar a la comprobación y el aviso no llegaba a verse; ahora se queda en la pantalla de inicio para que elijas entre \"Actualizar ahora\" o \"JUGAR\". Si no hay versión nueva, o no hay internet, arranca solo como siempre."
+    "notes": "Nuevo: archivos PBS custom desde el propio editor. Al crear una entrada, \"Guardar en el archivo\" ofrece \"+ Nuevo archivo custom…\": escribes el sufijo y se crea el archivo (p. ej. pokemon_region.txt) con la entrada dentro. Nuevo: cada entrada muestra en qué archivo está y un botón \"Mover\" para pasarla al archivo base, a otro custom de su categoría o a uno nuevo. Mejora: la ficha de Pokémon ya no repite la tabla \"Aparece en estado salvaje\", que está en el botón \"Área\". Corregido: el Validador de Integridad ya no dice que les falta el icono a las MT, MO y DT que usan el icono por tipo. Corregido: un archivo custom recién creado ya no pierde su comentario de cabecera al guardar la primera entrada."
 }
