@@ -1,5 +1,5 @@
 {
-    "version": "1.3.12",
+    "version": "1.4.0",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Nuevo: los gráficos ya no se pierden por error. Antes de subir o borrar cualquier gráfico se guarda lo que había: si subes un Front donde va el icono, avisa antes porque las medidas no encajan, y si aun así se guarda, puedes deshacerlo al momento o días después desde el Historial (en la ficha del Pokémon, el icono de cada objeto, cada tipo de entrenador o el de todo el proyecto en Copias de seguridad). Cada gráfico tiene además un botón Limpiar para dejar la casilla libre y subir el bueno. Seguridad: compilado con Python 3.14.10 (deja de confiar en los certificados comprometidos de eMudhra, importante para el actualizador automático), Pillow 13 (corrige decenas de fallos al abrir imágenes manipuladas) y Werkzeug 3.1.9. La vulnerabilidad de PHP de octubre no afecta: el editor no usa PHP. Corregido: un tipo de entrenador con su imagen en GIF ya se ve en el detalle del entrenador y en la lista de entrenadores de cada mapa."
+    "notes": "Launcher renovado: tus proyectos en cards con nombre, icono y versión del juego, y basta con arrastrar la carpeta a la ventana. Nuevo en el editor: Localización de cada objeto en el mapa de la región, generador de equipos para entrenadores, asistente para crear megas y formas, y renombrar el ID de objetos, movimientos, habilidades y tipos sin romper nada. Además, muchas mejoras y correcciones."
 }
