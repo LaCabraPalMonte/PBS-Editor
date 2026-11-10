@@ -99,6 +99,10 @@
     const descEl = document.getElementById('desc');
     const openBtn = document.getElementById('openBtn');
 
+    // Solo carpetas del propio equipo (C:\..., D:/...). Con una ruta de red (\\servidor\carpeta) Windows se
+    // conectaría a ese servidor al abrirla, y un enlace del dominio oficial no debe servir para eso.
+    if (path && !/^[A-Za-z]:[\\/]/.test(path)) path = null;
+
     if (!path) {
       titleEl.textContent = 'Falta la carpeta del proyecto';
       descEl.textContent = 'Este enlace debería incluir la ruta del proyecto (parámetro "path"). Ábrelo desde el mod de MakerStudio en vez de a mano.';

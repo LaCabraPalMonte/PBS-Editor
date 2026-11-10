@@ -3,317 +3,582 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-QVOnwTb3cPoDH3EcCI5L11RykTYShWiLn8VeV6FYc9E='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <title>PBS Editor — Editor visual de archivos PBS para Pokémon Essentials v21</title>
-<meta name="description" content="Editor visual gratuito y de código abierto para archivos PBS de Pokémon Essentials v21. Instalación en un clic, con backups automáticos, dashboard de estadísticas y editor de mapas/tilesets.">
+<meta name="description" content="PBS Editor es una herramienta gratuita para Windows que convierte los archivos PBS de tu fangame de Pokémon Essentials v21 en fichas visuales: Pokémon, movimientos, entrenadores, encuentros y mapas, con validador y copias de seguridad.">
+<meta name="author" content="LaCabraPalMonte">
+<meta name="theme-color" content="#070b15">
+<link rel="canonical" href="https://lacabrapalmonte.github.io/PBS-Editor/">
+
 <meta property="og:type" content="website">
-<meta property="og:title" content="PBS Editor — tu Pokédex de datos, sin tocar código">
-<meta property="og:description" content="Editor visual gratuito para archivos PBS de cualquier fangame Pokémon Essentials v21. Instala y edita en minutos.">
-<meta property="og:image" content="screenshots/dashboard.webp">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta property="og:site_name" content="PBS Editor">
+<meta property="og:locale" content="es_ES">
+<meta property="og:url" content="https://lacabrapalmonte.github.io/PBS-Editor/">
+<meta property="og:title" content="PBS Editor — edita tu fangame, no archivos de texto">
+<meta property="og:description" content="Editor visual gratuito para los archivos PBS de cualquier fangame hecho con Pokémon Essentials v21. Pokémon, movimientos, entrenadores, encuentros y mapas.">
+<meta property="og:image" content="https://lacabrapalmonte.github.io/PBS-Editor/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PBS Editor: la ficha de Charizard abierta en el editor visual">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@PokemonOlympus">
+<meta name="twitter:title" content="PBS Editor — edita tu fangame, no archivos de texto">
+<meta name="twitter:description" content="Editor visual gratuito para los archivos PBS de cualquier fangame hecho con Pokémon Essentials v21.">
+<meta name="twitter:image" content="https://lacabrapalmonte.github.io/PBS-Editor/og-image.png">
+
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" type="image/webp" href="screenshots/pbs-editor-pokemon-1440.webp" imagesrcset="screenshots/pbs-editor-pokemon-960.webp 960w, screenshots/pbs-editor-pokemon-1440.webp 1440w, screenshots/pbs-editor-pokemon-2160.webp 2160w" imagesizes="(max-width: 700px) 130vw, (max-width: 1260px) 100vw, (min-width: 2300px) 1540px, (min-width: 1800px) 1340px, 1180px">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/motion.css">
-<link rel="stylesheet" href="css/evo.css">
-<noscript><style>.m-in,.m-reveal{opacity:1!important;transform:none!important;} .evo-wrap{height:auto!important;}</style></noscript>
+<!-- Si se toca este script hay que recalcular su sha256 en la Content-Security-Policy de arriba (ver README). -->
+<script>document.documentElement.classList.add('js');window.pbsBoot=setTimeout(function(){document.documentElement.classList.remove('js')},4000)</script>
+<noscript><style>.gal-panel[hidden]{display:block!important;margin-bottom:32px}.tabs,.gal-hint{display:none}</style></noscript>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PBS Editor",
+  "description": "Editor visual gratuito para los archivos PBS de proyectos hechos con Pokémon Essentials v21.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Windows 10, Windows 11",
+  "url": "https://lacabrapalmonte.github.io/PBS-Editor/",
+  "downloadUrl": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Setup.exe",
+  "image": "https://lacabrapalmonte.github.io/PBS-Editor/og-image.png",
+  "screenshot": "https://lacabrapalmonte.github.io/PBS-Editor/screenshots/pbs-editor-pokemon-1440.webp",
+  "inLanguage": ["es", "en", "fr"],
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "author": { "@type": "Person", "name": "LaCabraPalMonte" }
+}
+</script>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Marca "Bracket Ball": el corchete [ID] de cada entrada PBS, dibujado como una pokébola. Es la misma del editor. -->
+  <symbol id="mark" viewBox="0 0 100 100">
+    <rect x="9" y="11" width="88" height="88" rx="22" fill="#0e1a38"/>
+    <rect x="4" y="4" width="88" height="88" rx="22" fill="#2f6dc4" stroke="#182541" stroke-width="5"/>
+    <path d="M42 27 L28 27 L28 73 L42 73" fill="none" stroke="#182541" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42 27 L28 27 L28 73 L42 73" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M58 27 L72 27 L72 73 L58 73" fill="none" stroke="#182541" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M58 27 L72 27 L72 73 L58 73" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M23 55 L23 48 L37 38 L50 48 L63 38 L77 48 L77 55 Z" fill="#e3350d" stroke="#182541" stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="50" cy="50" r="9" fill="#ffcb05" stroke="#182541" stroke-width="5"/>
+  </symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><g class="dl-arrow"><path d="M12 3v12"/><path d="M6.5 10.5L12 16l5.5-5.5"/></g><path d="M5 21h14"/></symbol>
+  <symbol id="i-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
 
-<nav class="top">
-  <div class="brand">
-    <svg class="ball" viewBox="0 0 100 100" aria-hidden="true">
-      <circle cx="50" cy="50" r="45" fill="#fff" stroke="#182541" stroke-width="5"/>
-      <path d="M6,50 A44,44 0 0 1 94,50 Z" fill="#e3350d"/>
-      <rect x="4" y="46" width="92" height="8" fill="#182541"/>
-      <circle cx="50" cy="50" r="13" fill="#fff" stroke="#182541" stroke-width="5"/>
-      <circle cx="50" cy="50" r="5" fill="#fff" stroke="#182541" stroke-width="2"/>
-    </svg>
-    PBS Editor
-    <sub class="text-muted">by LaCabraPalMonte</sub>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#inicio" aria-label="PBS Editor, inicio"><svg aria-hidden="true"><use href="#mark"/></svg>PBS Editor</a>
+    <nav aria-label="Principal">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#funciones">Funciones</a></li>
+        <li><a href="#capturas">Capturas</a></li>
+        <li><a href="#como-funciona">Cómo funciona</a></li>
+        <li><a href="#comunidad">Comunidad</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#descarga"><svg aria-hidden="true"><use href="#i-down"/></svg>Descargar</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menú">
+      <svg class="bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
   </div>
-  <div class="navlinks">
-    <a href="#caracteristicas">Características</a>
-    <a href="#como-funciona">Cómo funciona</a>
-    <a href="#descarga">Descarga</a>
-    <a href="#comunidad">Comunidad</a>
-  </div>
-</nav>
+</header>
 
-<div class="hero-sky">
-  <div class="cloud" style="width:180px;height:60px;top:30px;left:6%;"></div>
-  <div class="cloud" style="width:120px;height:44px;top:90px;right:8%;"></div>
-  <div class="cloud" style="width:90px;height:34px;top:14px;right:26%;"></div>
+<main id="contenido">
 
-  <div class="wrap hero">
-    <svg class="ball-spin" viewBox="0 0 100 100" aria-hidden="true">
-      <circle cx="50" cy="50" r="45" fill="#fff" stroke="#182541" stroke-width="5"/>
-      <path d="M6,50 A44,44 0 0 1 94,50 Z" fill="#e3350d"/>
-      <rect x="4" y="46" width="92" height="8" fill="#182541"/>
-      <circle cx="50" cy="50" r="13" fill="#fff" stroke="#182541" stroke-width="5"/>
-      <circle cx="50" cy="50" r="5" fill="#fff" stroke="#182541" stroke-width="2"/>
-    </svg>
-
-    <p class="eyebrow">Herramienta no oficial · Pokémon Essentials v21</p>
-    <h1>Tu Pokédex de datos,<br><span class="hl">sin tocar código.</span></h1>
-
-    <div class="textbox">
-      <b>PBS Editor</b> convierte los archivos PBS de tu fangame en un editor visual: busca entradas, valida referencias y guarda con backup automático en cada cambio. Compatible con cualquier proyecto Essentials v21.
-      <div class="arrow"></div>
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <p class="eyebrow"><span class="dot"></span>Gratis · No oficial · <span class="wide-only">Para Pokémon </span>Essentials v21</p>
+    <h1>Edita tu fangame,<br><span class="dim">no <s>archivos de texto</s>.</span></h1>
+    <p class="lead"><strong>PBS Editor</strong> convierte los archivos PBS de tu proyecto de Pokémon Essentials v21 en fichas visuales. Pokémon, movimientos, entrenadores, encuentros y mapas: todo se busca, se valida y se guarda con copia de seguridad.</p>
+    <div class="cta">
+      <a class="btn btn-primary btn-lg" href="https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Setup.exe"><svg aria-hidden="true"><use href="#i-down"/></svg>Descargar gratis</a>
+      <a class="btn btn-ghost btn-lg" href="#funciones">Ver qué hace <svg class="go" aria-hidden="true"><use href="#i-go"/></svg></a>
     </div>
+    <ul class="hero-meta">
+      <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Versión <b>1.4.1</b></li>
+      <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Windows 10 y 11</li>
+      <li><svg aria-hidden="true"><use href="#i-ok"/></svg>No necesita Python ni permisos de administrador</li>
+    </ul>
 
-    <div class="cta-row">
-      <a class="btn btn-primary" href="https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Setup.exe">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
-        Descargar gratis
-      </a>
-    </div>
-
-    <div class="dex">
-      <div class="dex-lights"><span></span><span></span><span></span></div>
-      <div class="dex-screen">
-        <div class="dex-screen-head">
-          <span class="file">pokemon.txt</span>
-          <div class="toggle-group" role="group" aria-label="Vista del editor">
-            <button type="button" data-view="raw" aria-pressed="false" onclick="showView('raw')">Texto plano</button>
-            <button type="button" data-view="visual" aria-pressed="true" onclick="showView('visual')">Editor visual</button>
+    <div class="demo" id="demo">
+      <div class="pbs">
+        <div class="pbs-head"><b>pokemon.txt</b><span>así está en tu proyecto</span></div>
+        <ul class="pbs-body">
+          <li class="sec">[CHARIZARD]</li>
+          <li class="int"><button class="pbs-line" type="button" aria-pressed="false" data-spot="46.46,50.89,51.53,8.24"><span class="k">Name</span> = <span class="v">Charizard</span></button></li>
+          <li class="int"><button class="pbs-line" type="button" aria-pressed="false" data-spot="46.46,60.52,51.53,8.35"><span class="k">Types</span> = <span class="v">FIRE,FLYING</span></button></li>
+          <li class="int"><button class="pbs-line" type="button" aria-pressed="false" data-spot="46.46,70.15,51.53,28.17"><span class="k">BaseStats</span> = <span class="v">78,84,78,100,109,85</span></button></li>
+          <li>Abilities = BLAZE</li>
+          <li>HiddenAbilities = SOLARPOWER</li>
+        </ul>
+        <p class="pbs-foot">Pulsa una línea para ver dónde queda en el editor.</p>
+      </div>
+      <div class="win">
+        <div class="win-bar" aria-hidden="true">
+          <svg class="mark"><use href="#mark"/></svg>PBS Editor
+          <span class="win-ctl">
+            <i><svg viewBox="0 0 10 10" stroke="currentColor" fill="none"><path d="M0 5h10"/></svg></i>
+            <i><svg viewBox="0 0 10 10" stroke="currentColor" fill="none"><rect x=".5" y=".5" width="9" height="9"/></svg></i>
+            <i><svg viewBox="0 0 10 10" stroke="currentColor" fill="none"><path d="M0 0l10 10M10 0L0 10"/></svg></i>
+          </span>
+        </div>
+        <div class="win-shot">
+          <div class="win-zoom">
+          <img src="screenshots/pbs-editor-pokemon-1440.webp"
+               srcset="screenshots/pbs-editor-pokemon-960.webp 960w, screenshots/pbs-editor-pokemon-1440.webp 1440w, screenshots/pbs-editor-pokemon-2160.webp 2160w"
+               sizes="(max-width: 700px) 130vw, (max-width: 1260px) 100vw, (min-width: 2300px) 1540px, (min-width: 1800px) 1340px, 1180px" width="1440" height="1080" fetchpriority="high" decoding="async"
+               alt="Captura de PBS Editor con la ficha de Charizard: nombre, tipos Fuego y Volador, y estadísticas base con gráfico de radar">
+          <div class="spot" id="spot" aria-hidden="true"></div>
           </div>
         </div>
-        <div class="view" id="view-raw">
-          <pre class="code"><span class="tag">[PIKACHU]</span>
-<span class="k">Name          = </span><span class="v">Pikachu</span>
-<span class="k">Types         = </span><span class="v">ELECTRIC</span>
-<span class="k">BaseStats     = </span><span class="v">35,55,40,90,50,50</span>
-<span class="k">Abilities     = </span><span class="v">STATIC</span>
-<span class="k">HiddenAbility = </span><span class="v">LIGHTNINGROD</span>
-<span class="k">MoveLevelUp   = </span><span class="v">1,THUNDERSHOCK,1,TAILWHIP<span class="cursor"></span></span></pre>
-        </div>
-        <div class="view active" id="view-visual">
-          <img class="shot-inline" src="screenshots/pokemon-editor.webp" alt="Captura real de PBS Editor: ficha de Bulbasaur con tipos y estadisticas base editables" loading="lazy" width="1200" height="750">
-        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="evo-wrap" id="evoWrap">
-  <div class="evo-sticky">
-    <div class="evo-layer" id="evoClouds">
-      <span class="evo-cloud" style="width:150px;height:52px;top:12%;left:8%;"></span>
-      <span class="evo-cloud" style="width:100px;height:38px;top:20%;right:12%;"></span>
-      <span class="evo-cloud" style="width:80px;height:30px;top:60%;left:14%;"></span>
-      <span class="evo-cloud" style="width:120px;height:44px;top:68%;right:8%;"></span>
-    </div>
-    <div class="evo-flash" id="evoFlash"></div>
-    <div class="evo-layer evo-icons-drift" id="evoIconsDrift"></div>
-    <div class="evo-ground"></div>
-    <div class="evo-stage">
-      <div class="evo-label"><span class="evo-no" id="evoNo">#004</span><span class="evo-name" id="evoName">Charmander</span></div>
-      <div class="evo-sprite-wrap">
-        <img class="evo-sprite silhouette" id="evoSpriteSil" src="" alt="" aria-hidden="true">
-        <img class="evo-sprite color" id="evoSpriteColor" src="" alt="Evolución del Pokémon">
-      </div>
-      <div class="evo-dots" id="evoDots"><span class="on"></span><span></span><span></span><span></span></div>
-      <p class="evo-caption">Así como un Pokémon evoluciona, tus archivos PBS pasan de <b>texto plano</b> a <b>datos con forma</b> — sin perder ni una línea en el camino.</p>
-    </div>
-    <div class="evo-scrollhint"><span>sigue bajando</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-  </div>
-</div>
-
-<div class="icon-strip" aria-hidden="true">
-  <div class="icon-strip-track" id="iconStripTrack"></div>
-</div>
-
-<div class="strip" aria-hidden="true">
-  <div class="strip-track">
-    <span>pokemon.txt</span><span>moves.txt</span><span>abilities.txt</span><span>items.txt</span><span>trainers.txt</span><span>encounters.txt</span><span>town_map.txt</span><span>regional_dexes.txt</span><span>Tilesets.rxdata</span>
-    <span>pokemon.txt</span><span>moves.txt</span><span>abilities.txt</span><span>items.txt</span><span>trainers.txt</span><span>encounters.txt</span><span>town_map.txt</span><span>regional_dexes.txt</span><span>Tilesets.rxdata</span>
-  </div>
-</div>
-
-<div class="wrap">
-  <section id="capturas">
-    <div class="section-head">
-      <p class="kicker">Capturas de pantalla</p>
-      <h2>Asi se ve por dentro</h2>
-      <p>Capturas reales de PBS Editor corriendo sobre el proyecto Pokemon Olympus.</p>
-    </div>
-
-    <div class="gallery-tabs" role="tablist" aria-label="Capturas de pantalla">
-      <button type="button" data-shot="dashboard" aria-pressed="true" onclick="showShot('dashboard')">Dashboard</button>
-      <button type="button" data-shot="trainer" aria-pressed="false" onclick="showShot('trainer')">Entrenadores</button>
-      <button type="button" data-shot="map" aria-pressed="false" onclick="showShot('map')">Mapa de regiones</button>
-      <button type="button" data-shot="tileset" aria-pressed="false" onclick="showShot('tileset')">Tilesets</button>
-    </div>
-
-    <div class="gallery-frame">
-      <div class="gallery-bar">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <span class="url" id="gallery-url">PBS_Editor -- dashboard</span>
-      </div>
-      <div class="gallery-shot active" id="shot-dashboard">
-        <img src="screenshots/dashboard.webp" alt="Dashboard de estadisticas de PBS Editor con conteos de Pokemon, movimientos, objetos, habilidades, entrenadores y zonas de encuentro" loading="lazy" width="1200" height="750">
-      </div>
-      <div class="gallery-shot" id="shot-trainer">
-        <img src="screenshots/trainer-editor.webp" alt="Editor de entrenadores de PBS Editor mostrando la ficha del entrenador Camper Liam" loading="lazy" width="1200" height="750">
-      </div>
-      <div class="gallery-shot" id="shot-map">
-        <img src="screenshots/map-editor.webp" alt="Editor visual de mapa de regiones (Town Map) de PBS Editor con los puntos de interes de la region Essen" loading="lazy" width="1000" height="446">
-      </div>
-      <div class="gallery-shot" id="shot-tileset">
-        <img src="screenshots/tileset-editor.webp" alt="Editor de tilesets de PBS Editor mostrando la hoja de tiles y sus propiedades de passage" loading="lazy" width="1200" height="750">
-      </div>
-      <p class="gallery-caption" id="gallery-caption">1025 Pokemon, 835 movimientos, 790 objetos y 21 entrenadores del proyecto Pokemon Olympus, listos para editar.</p>
-    </div>
-  </section>
-
-  <section id="caracteristicas">
-    <div class="section-head">
-      <p class="kicker">Características</p>
-      <h2>Todo lo que necesitas para mantener tu PBS sano</h2>
-      <p>Un editor pensado para desarrolladores de fangames: rápido de abrir, difícil de romper.</p>
-    </div>
-    <div class="grid-features">
-      <div class="feature">
-        <div class="icon-badge" style="background:#6390f0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
-        <h3>Búsqueda y paginación</h3>
-        <p>Encuentra cualquier entrada por ID o nombre al instante, incluso en listas de miles de líneas.</p>
-      </div>
-      <div class="feature">
-        <div class="icon-badge" style="background:#f7d02c;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="11" height="11" rx="1"/><path d="M9 15v4a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1h-4"/></svg></div>
-        <h3>Editor por lotes</h3>
-        <p>Selecciona varias entradas y aplica el mismo cambio a todas de una sola vez.</p>
-      </div>
-      <div class="feature">
-        <div class="icon-badge" style="background:#7ac74c;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></div>
-        <h3>Deshacer / rehacer</h3>
-        <p>Hasta 100 operaciones de historial con atajos de teclado, por si algo sale mal.</p>
-      </div>
-      <div class="feature">
-        <div class="icon-badge" style="background:#ee8130;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/></svg></div>
-        <h3>Backups automáticos</h3>
-        <p>Cada guardado crea una copia con timestamp en <code>PBS_backups/</code>, sin que tengas que pensarlo.</p>
-      </div>
-      <div class="feature">
-        <div class="icon-badge" style="background:#a98ff3;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
-        <h3>Dashboard y análisis</h3>
-        <p>Conteos, distribución por tipo, movimientos más aprendidos y curva de dificultad de entrenadores.</p>
-      </div>
-      <div class="feature">
-        <div class="icon-badge" style="background:#8b7355;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.2-1.5a1 1 0 0 1-.8-1V5.6a1 1 0 0 1 1.3-1L9 6m0 14l6-2m-6 2V6m6 12l5.2 1.5a1 1 0 0 0 .8-1V4.6a1 1 0 0 0-1.3-1L15 6m0 12V6m0 0L9 4"/></svg></div>
-        <h3>Editor de mapa (Town Map)</h3>
-        <p>Añade y edita puntos de interés haciendo clic directamente sobre el mapa de cada región.</p>
-      </div>
-      <div class="feature">
-        <div class="icon-badge" style="background:#b7b7ae;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
-        <h3>Editor de tilesets</h3>
-        <p>Selecciona casillas por arrastre y aplica passage, priority o terrain tag en bloque.</p>
-      </div>
-      <div class="feature">
-        <div class="icon-badge" style="background:#6f35fc;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4-4 4"/><path d="M21 7H9a4 4 0 0 0-4 4v1"/><path d="M7 21l-4-4 4-4"/><path d="M3 17h12a4 4 0 0 0 4-4v-1"/></svg></div>
-        <h3>Importador de Showdown</h3>
-        <p>Pega un equipo en formato Pokémon Showdown y conviértelo directo a entradas de <code>trainers.txt</code>.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="como-funciona">
-    <div class="section-head">
-      <p class="kicker">Cómo funciona</p>
-      <h2>De cero a editando en menos de un minuto</h2>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <span class="n">N.º 001</span>
-        <h3>Instala PBS Editor</h3>
-        <p>Descarga y ejecuta <code>PBS_Editor_Setup.exe</code>. Se instala como cualquier programa, sin dependencias que configurar.</p>
-      </div>
-      <div class="step">
-        <span class="n">N.º 002</span>
-        <h3>Elige tu proyecto</h3>
-        <p>La primera vez te pedirá la carpeta raíz de tu proyecto (la que contiene <code>PBS/</code>, <code>Graphics/</code> y <code>Data/</code>). Queda guardada para la próxima vez.</p>
-      </div>
-      <div class="step">
-        <span class="n">N.º 003</span>
-        <h3>Edita</h3>
-        <p>Se abre una ventana propia con el editor, sin depender del navegador del sistema.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="descarga">
-    <div class="section-head">
-      <p class="kicker">Descarga</p>
-      <h2>Gratis, portable y de código abierto</h2>
-    </div>
-    <div class="download-panel">
-      <div class="dl-left">
-        <span class="version-badge">Versión <b>1.4.1</b></span>
-        <h3 style="font-size:16px; margin:0 0 6px; font-weight:800;">PBS_Editor_Setup.exe</h3>
-        <p style="color:var(--ink-dim); font-size:13.5px; line-height:1.6; margin:0;">Instalador con launcher, servidor y consola de depuración. No requiere Python ni permisos de administrador.</p>
-        <ul class="req-list">
-          <li>Windows 7 o superior</li>
-          <li>Ningún requisito adicional — todo incluido</li>
-          <li>Actualizaciones automáticas desde el propio launcher</li>
-          <li>Compatible con cualquier fangame Essentials v21</li>
+<!-- ============ ARCHIVOS ============ -->
+<section class="files" aria-label="Archivos PBS que edita">
+  <div class="files-in">
+    <p class="files-label">Edita</p>
+    <div class="marquee">
+      <div class="marquee-track">
+        <ul>
+          <li>pokemon.txt</li><li>pokemon_forms.txt</li><li>moves.txt</li><li>abilities.txt</li><li>items.txt</li><li>berry_plants.txt</li><li>trainers.txt</li><li>trainer_types.txt</li><li>types.txt</li><li>encounters.txt</li><li>map_metadata.txt</li><li>town_map.txt</li><li>metadata.txt</li><li>regional_dexes.txt</li><li>pokemon_metrics.txt</li>
+        </ul>
+        <ul aria-hidden="true">
+          <li>pokemon.txt</li><li>pokemon_forms.txt</li><li>moves.txt</li><li>abilities.txt</li><li>items.txt</li><li>berry_plants.txt</li><li>trainers.txt</li><li>trainer_types.txt</li><li>types.txt</li><li>encounters.txt</li><li>map_metadata.txt</li><li>town_map.txt</li><li>metadata.txt</li><li>regional_dexes.txt</li><li>pokemon_metrics.txt</li>
         </ul>
       </div>
-      <div class="dl-right">
-        <a class="btn btn-primary" href="https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Setup.exe">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
-          Descargar PBS_Editor_Setup.exe
-        </a>
-        <span class="fine">Windows SmartScreen puede avisar: "Más información" → "Ejecutar de todas formas"</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FUNCIONES ============ -->
+<section class="section" id="funciones">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="kicker">FUNCIONES</p>
+      <h2>Todo lo que guarda tu carpeta PBS, por fin con interfaz</h2>
+      <p>Cada archivo tiene un editor pensado para lo que contiene. Estas son las piezas que más horas ahorran.</p>
+    </div>
+
+    <article class="feat">
+      <div class="feat-text reveal">
+        <p class="feat-no">N.º 001 · POKÉMON</p>
+        <h3>Fichas que se entienden de un vistazo</h3>
+        <p>Tipos, estadísticas con radar, habilidades, movimientos por nivel, huevo y tutor, y la cadena evolutiva dibujada con sus formas y megas. Crear una megaevolución o una forma regional es rellenar un asistente.</p>
+        <ul class="ticks">
+          <li>Cadena evolutiva visual, con el método y el objeto de cada paso</li>
+          <li>Asistente de megas y formas: crea la forma y, si falta, su megapiedra</li>
+          <li>Sprites e iconos con aviso si las medidas no encajan, e historial para deshacer</li>
+        </ul>
+      </div>
+      <div class="feat-media reveal" style="--d:1">
+        <div class="stack has-over">
+          <button class="shot fade" type="button" data-full="screenshots/pbs-editor-cadena-evolutiva-2189.webp" data-w="2189" data-h="1570" data-cap="Cadena evolutiva de Ralts, con la rama de Gallade y las megaevoluciones.">
+            <img src="screenshots/pbs-editor-cadena-evolutiva-1094.webp" srcset="screenshots/pbs-editor-cadena-evolutiva-1094.webp 1094w, screenshots/pbs-editor-cadena-evolutiva-2189.webp 2189w" sizes="(max-width: 960px) 92vw, 660px" width="1094" height="785" loading="lazy" decoding="async" alt="Ventana «Cadena evolutiva de Ralts»: Ralts evoluciona a Kirlia al nivel 20, y Kirlia a Gardevoir al nivel 30 o a Gallade con Piedra Alba">
+          </button>
+          <button class="shot over" type="button" data-full="screenshots/pbs-editor-asistente-formas-1536.webp" data-w="1536" data-h="1351" data-cap="Asistente «Nueva forma»: megaevolución de Dragonite con su megapiedra y el reparto de +100 de estadísticas.">
+            <img src="screenshots/pbs-editor-asistente-formas-768.webp" srcset="screenshots/pbs-editor-asistente-formas-768.webp 768w, screenshots/pbs-editor-asistente-formas-1536.webp 1536w" sizes="(max-width: 560px) 92vw, 360px" width="768" height="676" loading="lazy" decoding="async" alt="Asistente «Nueva forma de Dragonite» con las pestañas Megaevolución, Forma regional y En blanco">
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <article class="feat flip">
+      <div class="feat-text reveal">
+        <p class="feat-no">N.º 002 · ENTRENADORES</p>
+        <h3>Equipos de entrenador sin hacer cuentas</h3>
+        <p>Cada equipo se ve con sus sprites, niveles, objetos y cobertura de tipos. Y si no sabes qué ponerle a un rival, el generador propone un equipo según el nivel, el tipo y los Pokémon salvajes de esa parte de la historia, ya evolucionados como toca.</p>
+        <ul class="ticks">
+          <li>Generador de equipos por nivel, tipo y zona</li>
+          <li>Sube o baja el nivel de todo el equipo de una vez</li>
+          <li>Cobertura ofensiva y debilidades del equipo a la vista</li>
+        </ul>
+      </div>
+      <div class="feat-media reveal" style="--d:1">
+        <div class="stack left has-over">
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-entrenadores-1920.webp" data-w="1920" data-h="1200" data-cap="Editor de entrenadores: el equipo de Brock con la cobertura de tipos.">
+            <img src="screenshots/pbs-editor-entrenadores-960.webp" srcset="screenshots/pbs-editor-entrenadores-960.webp 960w, screenshots/pbs-editor-entrenadores-1920.webp 1920w" sizes="(max-width: 960px) 92vw, 660px" width="960" height="600" loading="lazy" decoding="async" alt="Editor de entrenadores con el equipo de Brock, Geodude y Onix, y la cobertura de tipos del equipo">
+          </button>
+          <button class="shot over" type="button" data-full="screenshots/pbs-editor-generador-equipos-1536.webp" data-w="1536" data-h="1207" data-cap="Generador de equipos: seis Pokémon de nivel medio 42 elegidos entre los salvajes vistos hasta ese punto.">
+            <img src="screenshots/pbs-editor-generador-equipos-768.webp" srcset="screenshots/pbs-editor-generador-equipos-768.webp 768w, screenshots/pbs-editor-generador-equipos-1536.webp 1536w" sizes="(max-width: 560px) 92vw, 360px" width="768" height="604" loading="lazy" decoding="async" alt="Ventana «Generar equipo» con nivel medio, número de Pokémon, tipo y una propuesta de seis Pokémon">
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <article class="feat">
+      <div class="feat-text reveal">
+        <p class="feat-no">N.º 003 · MAPA DE LA REGIÓN</p>
+        <h3>Dónde sale cada Pokémon y dónde se consigue cada objeto</h3>
+        <p>El editor cruza encuentros, mapas y eventos y te lo enseña sobre el mapa de tu región, igual que lo verá el jugador en la Pokédex. Se acabó abrir mapa por mapa para saber si una piedra evolutiva se puede conseguir.</p>
+        <ul class="ticks">
+          <li>Área de cada Pokémon, con niveles y probabilidad real de aparición</li>
+          <li>Localización de cada objeto: tiendas, ocultos, regalos y salvajes que lo llevan</li>
+          <li>Editor de regiones para colocar los puntos del Town Map con un clic</li>
+        </ul>
+      </div>
+      <div class="feat-media reveal" style="--d:1">
+        <div class="stack duo">
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-area-2189.webp" data-w="2189" data-h="1010" data-cap="Área de Pidgey: los mapas donde aparece, con tipo de encuentro, niveles y probabilidad.">
+            <img src="screenshots/pbs-editor-area-1094.webp" srcset="screenshots/pbs-editor-area-1094.webp 1094w, screenshots/pbs-editor-area-2189.webp 2189w" sizes="(max-width: 960px) 82vw, 580px" width="1094" height="505" loading="lazy" decoding="async" alt="Ventana «Área de Pidgey» con el mapa de la región y la lista de mapas donde aparece en estado salvaje">
+          </button>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-localizacion-2189.webp" data-w="2189" data-h="1010" data-cap="Localización de Poción: tiendas, objetos ocultos y Pokémon salvajes que la llevan.">
+            <img src="screenshots/pbs-editor-localizacion-1094.webp" srcset="screenshots/pbs-editor-localizacion-1094.webp 1094w, screenshots/pbs-editor-localizacion-2189.webp 2189w" sizes="(max-width: 960px) 82vw, 580px" width="1094" height="505" loading="lazy" decoding="async" alt="Ventana «Localización de Poción» con el mapa de la región y la lista de tiendas y mapas donde se consigue">
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <article class="feat flip">
+      <div class="feat-text reveal">
+        <p class="feat-no">N.º 004 · RED DE SEGURIDAD</p>
+        <h3>Cambia lo que quieras. No se rompe nada</h3>
+        <p>Renombrar un ID actualiza todas sus referencias en el proyecto, y antes te enseña cada cambio que va a hacer. El validador repasa el proyecto entero en busca de duplicados, referencias rotas y valores inválidos antes de que los encuentre un jugador.</p>
+        <ul class="ticks">
+          <li>Renombra el ID de objetos, movimientos, habilidades y tipos, con vista previa y aviso si lo usan scripts o eventos</li>
+          <li>Copia de seguridad en cada guardado, y un explorador para restaurarlas</li>
+          <li>Deshacer y rehacer hasta 100 operaciones: <kbd>Ctrl</kbd> + <kbd>Z</kbd></li>
+        </ul>
+      </div>
+      <div class="feat-media reveal" style="--d:1">
+        <div class="stack left has-over">
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-validador-1920.webp" data-w="1920" data-h="1200" data-cap="Validador de integridad: archivos escaneados, errores críticos, advertencias y sugerencias.">
+            <img src="screenshots/pbs-editor-validador-960.webp" srcset="screenshots/pbs-editor-validador-960.webp 960w, screenshots/pbs-editor-validador-1920.webp 1920w" sizes="(max-width: 960px) 92vw, 660px" width="960" height="600" loading="lazy" decoding="async" alt="Validador de integridad con el resumen: 9 archivos escaneados, 0 errores críticos, 5 advertencias">
+          </button>
+          <button class="shot over" type="button" data-full="screenshots/pbs-editor-renombrar-id-1536.webp" data-w="1536" data-h="1511" data-cap="Renombrar ID: vista previa de los 9 cambios en 3 archivos, y aviso de los scripts y eventos que también usan ese ID.">
+            <img src="screenshots/pbs-editor-renombrar-id-768.webp" srcset="screenshots/pbs-editor-renombrar-id-768.webp 768w, screenshots/pbs-editor-renombrar-id-1536.webp 1536w" sizes="(max-width: 560px) 92vw, 360px" width="768" height="756" loading="lazy" decoding="async" alt="Ventana «Renombrar ID» con la lista de cambios en items.txt, pokemon.txt y la carpeta de gráficos, y dos avisos sobre scripts y eventos">
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <div class="more-head reveal"><h3>Y además</h3></div>
+    <div class="bento">
+      <div class="tile pic t-dash reveal">
+        <div class="tile-txt">
+          <h4>Estadísticas del proyecto</h4>
+          <p>Cuántos Pokémon, movimientos y objetos tienes, y cómo se reparten por tipo y generación.</p>
+        </div>
+        <div class="tile-img"><img src="screenshots/pbs-editor-estadisticas-960.webp" width="960" height="600" loading="lazy" decoding="async" alt="Gráficos de Pokémon por tipo y por generación" style="--z:1.32; transform-origin: 100% 38%; object-position: 100% 40%"></div>
+      </div>
+      <div class="tile t-search reveal" style="--d:1">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+        <h4>Búsqueda global</h4>
+        <p>Un cuadro para buscar en todo el proyecto, además del buscador por ID o nombre de cada archivo.</p>
+      </div>
+      <div class="tile t-batch reveal" style="--d:2">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></span>
+        <h4>Editor múltiple</h4>
+        <p>El mismo cambio en muchas entradas a la vez, sin buscar y reemplazar a ciegas.</p>
+      </div>
+      <div class="tile t-use reveal">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+        <h4>Analizador de uso</h4>
+        <p>Qué Pokémon, objetos y movimientos de tu proyecto no usa nadie todavía.</p>
+      </div>
+      <div class="tile pic t-enc reveal" style="--d:1">
+        <div class="tile-txt">
+          <h4>Encuentros salvajes</h4>
+          <p>Cada mapa con sus tipos de encuentro, niveles y versiones, y los iconos de lo que sale en la hierba.</p>
+        </div>
+        <div class="tile-img"><img src="screenshots/pbs-editor-encuentros-960.webp" width="960" height="600" loading="lazy" decoding="async" alt="Editor de encuentros salvajes con la lista de mapas y sus Pokémon" style="--z:1.3; transform-origin: 62% 100%; object-position: 50% 100%"></div>
+      </div>
+      <div class="tile t-cmp reveal">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/></svg></span>
+        <h4>Comparador de entradas</h4>
+        <p>Dos entradas lado a lado para ver en qué se diferencian.</p>
+      </div>
+      <div class="tile t-custom reveal">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 12v6M9 15h6"/></svg></span>
+        <h4>Archivos PBS personalizados</h4>
+        <p>¿Tu proyecto reparte los datos en varios archivos? El editor los abre y te deja mover entradas de uno a otro.</p>
+      </div>
+      <div class="tile t-lang reveal" style="--d:1">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg></span>
+        <h4>En cuatro idiomas, con tema claro y oscuro</h4>
+        <ul class="langs" aria-label="Idiomas de la interfaz">
+          <li>Español</li><li>Español LATAM</li><li>English</li><li>Français</li>
+        </ul>
       </div>
     </div>
-    <div class="av-notice">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-      <span><b>Algunos antivirus pueden marcar el instalador como sospechoso — es un falso positivo, no un virus.</b> Pasa con casi cualquier ejecutable sin firma digital hecho con Python (cx_Freeze), y más aún si empaqueta un runtime .NET como este. Si tu antivirus lo bloquea o lo borra: añade una excepción para <code>PBS_Editor_Setup.exe</code>, o repórtalo como falso positivo al fabricante (con Windows Defender/SmartScreen basta "Más información" → "Ejecutar de todas formas"). Descárgalo siempre desde esta web o el Discord oficial.</span>
-    </div>
-  </section>
-
-  <section id="comunidad">
-    <div class="section-head">
-      <p class="kicker">Comunidad</p>
-      <h2>Probado en producción por Pokémon Olympus</h2>
-      <p>El editor nació desarrollando y testeando este fangame, pero es completamente genérico para cualquier proyecto Essentials v21.</p>
-    </div>
-    <div class="community">
-      <a class="comm-card" href="https://discord.gg/WQEmUtgner">
-        <div class="icon-badge" style="background:#5865F2;"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="3"/><path d="M9 12h.01M15 12h.01"/><path d="M8 5l1-2h6l1 2"/></svg></div>
-        <div><h3>Discord</h3><p>Reporta bugs, pide ayuda o comparte tu fangame</p></div>
-      </a>
-      <a class="comm-card" href="https://x.com/PokemonOlympus">
-        <div class="icon-badge" style="background:#182541;"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></svg></div>
-        <div><h3>@PokemonOlympus</h3><p>Novedades y avances del editor y del proyecto</p></div>
-      </a>
-    </div>
-    <p class="credits"><b>Desarrollo:</b> LaCabraPalMonte · <b>Base del proyecto:</b> Sky y dpertierra · <b>Ícono:</b> FireFalcon_7</p>
-  </section>
-
-  <footer>
-    <div class="scam-notice">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.86l-8.2 14.14A1.5 1.5 0 0 0 3.4 20h17.2a1.5 1.5 0 0 0 1.3-2L13.7 3.86a1.5 1.5 0 0 0-2.6 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-      <span><b>PBS Editor es 100% gratuito y su único desarrollador es LaCabraPalMonte.</b> Si pagaste por esta herramienta o te la vendió otra persona, te estafaron: pide la devolución. Descárgalo siempre desde esta web o desde nuestro Discord — no abras enlaces de descarga de otras páginas, perfiles o vídeos que digan ser PBS Editor.</span>
-    </div>
-    <div class="foot-row">
-      <span>© 2026 LaCabraPalMonte. PBS Editor es un proyecto fan hecho sin fines de lucro. Pokémon es marca registrada de Nintendo, Game Freak y The Pokémon Company. No afiliado oficialmente con Essentials, Maruno ni las entidades mencionadas.</span>
-      <span><a href="https://github.com/LaCabraPalMonte/PBS-Editor">github.com/LaCabraPalMonte/PBS-Editor</a></span>
-    </div>
-  </footer>
-</div>
-
-<div class="m-lightbox" id="mLightbox" hidden>
-  <div class="m-lb-backdrop"></div>
-  <div class="m-lb-frame" id="mLbFrame">
-    <div class="m-lb-bar"><span id="mLbName">captura</span><button id="mLbClose" type="button" aria-label="Cerrar">✕</button></div>
-    <div class="m-lb-shot" id="mLbShot"><img id="mLbImg" src="" alt=""></div>
-    <div class="m-lb-hint">Esc para cerrar · arrastra hacia abajo para cerrar · desliza a los lados para cambiar de captura</div>
   </div>
-</div>
+</section>
 
-<script src="js/main.js"></script>
-<script src="js/motion.js"></script>
-<script src="js/evo-data.js"></script>
-<script src="js/evo.js"></script>
+<!-- ============ CAPTURAS ============ -->
+<section class="section band" id="capturas">
+  <div class="wrap">
+    <div class="head center reveal">
+      <p class="kicker">CAPTURAS</p>
+      <h2>Míralo por dentro</h2>
+      <p>Capturas reales del editor, sin retocar. Están hechas con el tema oscuro; también tiene tema claro.</p>
+    </div>
 
+    <div class="reveal">
+      <div class="tabs" role="tablist" aria-label="Secciones del editor" id="galTabs">
+        <button class="tab" role="tab" type="button" id="tab-dashboard" aria-controls="gal-dashboard" aria-selected="true">Dashboard</button>
+        <button class="tab" role="tab" type="button" id="tab-pokemon" aria-controls="gal-pokemon" aria-selected="false" tabindex="-1">Pokémon</button>
+        <button class="tab" role="tab" type="button" id="tab-movimientos" aria-controls="gal-movimientos" aria-selected="false" tabindex="-1">Movimientos</button>
+        <button class="tab" role="tab" type="button" id="tab-entrenadores" aria-controls="gal-entrenadores" aria-selected="false" tabindex="-1">Entrenadores</button>
+        <button class="tab" role="tab" type="button" id="tab-encuentros" aria-controls="gal-encuentros" aria-selected="false" tabindex="-1">Encuentros</button>
+        <button class="tab" role="tab" type="button" id="tab-regiones" aria-controls="gal-regiones" aria-selected="false" tabindex="-1">Town Map</button>
+        <button class="tab" role="tab" type="button" id="tab-validador" aria-controls="gal-validador" aria-selected="false" tabindex="-1">Validador</button>
+        <button class="tab" role="tab" type="button" id="tab-analizador" aria-controls="gal-analizador" aria-selected="false" tabindex="-1">Analizador</button>
+      </div>
+
+      <div class="gal">
+        <div class="gal-panel" role="tabpanel" id="gal-dashboard" aria-labelledby="tab-dashboard"><figure>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-dashboard-1920.webp" data-w="1920" data-h="1200" data-cap="Dashboard: el resumen de tu proyecto nada más abrirlo.">
+            <img src="screenshots/pbs-editor-dashboard-960.webp" srcset="screenshots/pbs-editor-dashboard-960.webp 960w, screenshots/pbs-editor-dashboard-1920.webp 1920w" sizes="(max-width: 1120px) 94vw, 1080px" width="960" height="600" loading="lazy" decoding="async" alt="Dashboard de PBS Editor con el recuento de Pokémon, movimientos, objetos, habilidades, entrenadores y zonas de encuentro">
+          </button>
+          <figcaption><b>Dashboard.</b> El resumen de tu proyecto nada más abrirlo.</figcaption>
+        </figure></div>
+        <div class="gal-panel" role="tabpanel" id="gal-pokemon" aria-labelledby="tab-pokemon" hidden><figure>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-pokemon-2160.webp" data-w="2160" data-h="1620" data-cap="Pokémon: la ficha de Charizard, con tipos y estadísticas base.">
+            <img src="screenshots/pbs-editor-pokemon-960.webp" srcset="screenshots/pbs-editor-pokemon-960.webp 960w, screenshots/pbs-editor-pokemon-1440.webp 1440w, screenshots/pbs-editor-pokemon-2160.webp 2160w" sizes="(max-width: 1120px) 94vw, 1080px" width="1440" height="1080" loading="lazy" decoding="async" alt="Editor de Pokémon con la ficha de Charizard">
+          </button>
+          <figcaption><b>Pokémon.</b> La lista a la izquierda y la ficha a la derecha, con cada campo en su sitio.</figcaption>
+        </figure></div>
+        <div class="gal-panel" role="tabpanel" id="gal-movimientos" aria-labelledby="tab-movimientos" hidden><figure>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-movimientos-1920.webp" data-w="1920" data-h="1200" data-cap="Movimientos: Lanzallamas, con tipo, categoría y potencia.">
+            <img src="screenshots/pbs-editor-movimientos-960.webp" srcset="screenshots/pbs-editor-movimientos-960.webp 960w, screenshots/pbs-editor-movimientos-1920.webp 1920w" sizes="(max-width: 1120px) 94vw, 1080px" width="960" height="600" loading="lazy" decoding="async" alt="Editor de movimientos con Lanzallamas seleccionado">
+          </button>
+          <figcaption><b>Movimientos.</b> Tipo, categoría, potencia y PP visibles ya en la lista.</figcaption>
+        </figure></div>
+        <div class="gal-panel" role="tabpanel" id="gal-entrenadores" aria-labelledby="tab-entrenadores" hidden><figure>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-entrenadores-1920.webp" data-w="1920" data-h="1200" data-cap="Entrenadores: el equipo de Brock con la cobertura de tipos.">
+            <img src="screenshots/pbs-editor-entrenadores-960.webp" srcset="screenshots/pbs-editor-entrenadores-960.webp 960w, screenshots/pbs-editor-entrenadores-1920.webp 1920w" sizes="(max-width: 1120px) 94vw, 1080px" width="960" height="600" loading="lazy" decoding="async" alt="Editor de entrenadores con el equipo de Brock">
+          </button>
+          <figcaption><b>Entrenadores.</b> El equipo, sus objetos y la cobertura de tipos en la misma pantalla.</figcaption>
+        </figure></div>
+        <div class="gal-panel" role="tabpanel" id="gal-encuentros" aria-labelledby="tab-encuentros" hidden><figure>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-encuentros-1920.webp" data-w="1920" data-h="1200" data-cap="Encuentros: cada mapa con lo que aparece en la hierba, pescando o surfeando.">
+            <img src="screenshots/pbs-editor-encuentros-960.webp" srcset="screenshots/pbs-editor-encuentros-960.webp 960w, screenshots/pbs-editor-encuentros-1920.webp 1920w" sizes="(max-width: 1120px) 94vw, 1080px" width="960" height="600" loading="lazy" decoding="async" alt="Editor de encuentros salvajes con varios mapas y sus Pokémon">
+          </button>
+          <figcaption><b>Encuentros.</b> Cada mapa con lo que aparece en la hierba, pescando o surfeando.</figcaption>
+        </figure></div>
+        <div class="gal-panel" role="tabpanel" id="gal-regiones" aria-labelledby="tab-regiones" hidden><figure>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-regiones-1920.webp" data-w="1920" data-h="1200" data-cap="Town Map: los puntos de la región se colocan haciendo clic en la casilla.">
+            <img src="screenshots/pbs-editor-regiones-960.webp" srcset="screenshots/pbs-editor-regiones-960.webp 960w, screenshots/pbs-editor-regiones-1920.webp 1920w" sizes="(max-width: 1120px) 94vw, 1080px" width="960" height="600" loading="lazy" decoding="async" alt="Editor de regiones con el mapa de Essen y sus puntos de interés">
+          </button>
+          <figcaption><b>Town Map.</b> Los puntos de la región se colocan haciendo clic en la casilla.</figcaption>
+        </figure></div>
+        <div class="gal-panel" role="tabpanel" id="gal-validador" aria-labelledby="tab-validador" hidden><figure>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-validador-1920.webp" data-w="1920" data-h="1200" data-cap="Validador: errores, advertencias y sugerencias de todo el proyecto.">
+            <img src="screenshots/pbs-editor-validador-960.webp" srcset="screenshots/pbs-editor-validador-960.webp 960w, screenshots/pbs-editor-validador-1920.webp 1920w" sizes="(max-width: 1120px) 94vw, 1080px" width="960" height="600" loading="lazy" decoding="async" alt="Validador de integridad con el resultado del análisis">
+          </button>
+          <figcaption><b>Validador.</b> Errores, advertencias y sugerencias de todo el proyecto en una pasada.</figcaption>
+        </figure></div>
+        <div class="gal-panel" role="tabpanel" id="gal-analizador" aria-labelledby="tab-analizador" hidden><figure>
+          <button class="shot" type="button" data-full="screenshots/pbs-editor-analizador-1920.webp" data-w="1920" data-h="1200" data-cap="Analizador de uso: los Pokémon que aún no aparecen en ningún equipo ni mapa.">
+            <img src="screenshots/pbs-editor-analizador-960.webp" srcset="screenshots/pbs-editor-analizador-960.webp 960w, screenshots/pbs-editor-analizador-1920.webp 1920w" sizes="(max-width: 1120px) 94vw, 1080px" width="960" height="600" loading="lazy" decoding="async" alt="Analizador de uso con el recuento de Pokémon usados y sin usar">
+          </button>
+          <figcaption><b>Analizador de uso.</b> Los Pokémon que aún no aparecen en ningún equipo ni mapa.</figcaption>
+        </figure></div>
+      </div>
+      <p class="gal-hint">Pulsa una captura para ampliarla. <span class="kb">Dentro puedes moverte con <kbd>←</kbd> <kbd>→</kbd> y cerrar con <kbd>Esc</kbd>.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CÓMO FUNCIONA ============ -->
+<section class="section" id="como-funciona">
+  <div class="wrap">
+    <div class="head center reveal">
+      <p class="kicker">CÓMO FUNCIONA</p>
+      <h2>Instalado y editando en tres pasos</h2>
+      <p>No hay que configurar nada ni tocar tu proyecto: el editor trabaja sobre la carpeta que ya tienes.</p>
+    </div>
+    <ol class="steps">
+      <li class="step reveal">
+        <div class="step-art">
+          <div class="file-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6M9.5 14.5L12 17l2.5-2.5"/></svg>
+            <div><b>PBS_Editor_Setup.exe</b><span></span></div>
+          </div>
+        </div>
+        <div class="step-body">
+          <p class="step-no">N.º 001</p>
+          <h3>Descarga e instala</h3>
+          <p>Ejecuta <code>PBS_Editor_Setup.exe</code>. Se instala en tu usuario, sin permisos de administrador y sin instalar Python ni nada más.</p>
+        </div>
+      </li>
+      <li class="step reveal" style="--d:1">
+        <div class="step-art">
+          <img class="cover" src="screenshots/pbs-editor-launcher-820.webp" srcset="screenshots/pbs-editor-launcher-820.webp 820w, screenshots/pbs-editor-launcher-1640.webp 1640w" sizes="(max-width: 900px) 92vw, 380px" width="820" height="600" loading="lazy" decoding="async" alt="Launcher de PBS Editor con un proyecto elegido y el botón Play" style="--z:1.5; transform-origin: 50% 52%">
+        </div>
+        <div class="step-body">
+          <p class="step-no">N.º 002</p>
+          <h3>Elige tu proyecto</h3>
+          <p>Selecciona la carpeta de tu fangame o arrástrala a la ventana: la que contiene <code>PBS/</code>, <code>Graphics/</code> y <code>Data/</code>. Se queda guardada en tus proyectos recientes.</p>
+        </div>
+      </li>
+      <li class="step reveal" style="--d:2">
+        <div class="step-art">
+          <img class="cover" src="screenshots/pbs-editor-pokemon-960.webp" width="960" height="720" loading="lazy" decoding="async" alt="" style="--z:1.9; transform-origin: 97% 62%">
+        </div>
+        <div class="step-body">
+          <p class="step-no">N.º 003</p>
+          <h3>Edita y guarda</h3>
+          <p>El editor se abre en su propia ventana. Cada vez que guardas, antes se hace una copia de seguridad del archivo.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ DESCARGA ============ -->
+<section class="section band" id="descarga">
+  <div class="wrap">
+    <div class="dl reveal">
+      <div class="dl-main">
+        <p class="kicker">DESCARGA</p>
+        <h2>PBS Editor es gratis</h2>
+        <p>Para cualquier fangame hecho con Pokémon Essentials v21. Sin registro, sin anuncios y sin versión de pago.</p>
+        <div class="dl-cta">
+          <a class="btn btn-primary btn-lg" href="https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Setup.exe"><svg aria-hidden="true"><use href="#i-down"/></svg>Descargar para Windows</a>
+          <p class="dl-version">Versión <b>1.4.1</b><small>Instalador .exe · unos 20 MB</small></p>
+        </div>
+        <div class="dl-notes" id="dlNotes" hidden>
+          <h3>Novedades de esta versión</h3>
+          <p id="dlNotesText"></p>
+        </div>
+      </div>
+      <div class="spec" role="group" aria-label="Ficha técnica">
+        <p class="spec-sec">[PBS_EDITOR]</p>
+        <dl>
+          <dt>Precio</dt><dd>Gratis</dd>
+          <dt>Sistema</dt><dd>Windows 10 y 11</dd>
+          <dt>Compatible</dt><dd>Pokémon Essentials v21</dd>
+          <dt>Archivo</dt><dd>PBS_Editor_Setup.exe</dd>
+          <dt>Requisitos</dt><dd>Ninguno: lo trae todo</dd>
+          <dt>Permisos</dt><dd>No pide administrador</dd>
+          <dt>Idiomas</dt><dd>ES, LATAM, EN y FR</dd>
+          <dt>Actualiza</dt><dd>Desde el propio launcher</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="notices">
+      <div class="notice reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/></svg>
+        <p><b>Sobre los avisos de Windows.</b> El instalador no lleva firma digital, así que SmartScreen puede mostrar «Windows protegió su PC»: pulsa «Más información» y después «Ejecutar de todas formas». Algunos antivirus también desconfían de los programas sin firma. Si tienes dudas, analiza el archivo en <a href="https://www.virustotal.com/" rel="noopener">VirusTotal</a> antes de abrirlo.</p>
+      </div>
+      <div class="notice warn reveal" style="--d:1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L2.1 18a1.5 1.5 0 0 0 1.3 2.2h17.2a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/><path d="M12 9.5v4M12 17h.01"/></svg>
+        <p><b>Descárgalo solo desde aquí o desde el Discord oficial.</b> PBS Editor es gratuito y su único desarrollador es LaCabraPalMonte. Si alguien te lo ha vendido, te ha estafado: pide que te devuelvan el dinero. No abras descargas de otras páginas, perfiles o vídeos que digan ser PBS Editor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMUNIDAD ============ -->
+<section class="section" id="comunidad">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="kicker">COMUNIDAD</p>
+      <h2>Nació haciendo un fangame</h2>
+      <p>PBS Editor nació durante el desarrollo de Pokémon Olympus. Hoy sirve para cualquier proyecto de Essentials v21.</p>
+    </div>
+    <div class="comm">
+      <div class="card origin reveal">
+        <div class="sprites" aria-hidden="true">
+          <span class="pk"><i style="background-image:url(graphics/pokemon/icons/PIKACHU.png)"></i></span>
+          <span class="pk"><i style="background-image:url(graphics/pokemon/icons/EEVEE.png)"></i></span>
+          <span class="pk"><i style="background-image:url(graphics/pokemon/icons/GENGAR.png)"></i></span>
+        </div>
+        <h3>Probado en Pokémon Olympus</h3>
+        <p>El fangame con el que se desarrolla y se pone a prueba el editor.</p>
+      </div>
+      <a class="card reveal" style="--d:1" href="https://discord.gg/WQEmUtgner" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.3 5.3A17 17 0 0 0 15 4l-.5 1a15.5 15.5 0 0 0-5 0L9 4a17 17 0 0 0-4.3 1.3C2 9.4 1.3 13.3 1.6 17.2a17 17 0 0 0 5.2 2.6l1.1-1.8a11 11 0 0 1-1.7-.8l.4-.3a12.2 12.2 0 0 0 10.8 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.8a17 17 0 0 0 5.2-2.6c.4-4.5-.7-8.4-3.1-11.9zM8.7 14.8c-1 0-1.9-.9-1.9-2.1s.8-2.1 1.9-2.1 1.9.9 1.9 2.1-.9 2.1-1.9 2.1zm6.6 0c-1 0-1.9-.9-1.9-2.1s.8-2.1 1.9-2.1 1.9.9 1.9 2.1-.8 2.1-1.9 2.1z"/></svg></span>
+        <h3>Discord</h3>
+        <p>Reporta errores, pide ayuda o enseña tu fangame.</p>
+        <span class="more">Unirse al servidor <svg aria-hidden="true"><use href="#i-out"/></svg></span>
+      </a>
+      <a class="card reveal" style="--d:2" href="https://x.com/PokemonOlympus" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.3l-4.9-6.4L5.2 21H2.1l7.2-8.3L1.7 3h6.4l4.4 5.9L17.8 3zm-1.1 16.2h1.7L7.2 4.7H5.4l11.3 14.5z"/></svg></span>
+        <h3>@PokemonOlympus</h3>
+        <p>Novedades y avances del editor y del proyecto.</p>
+        <span class="more">Seguir en X <svg aria-hidden="true"><use href="#i-out"/></svg></span>
+      </a>
+      <a class="card wide reveal" style="--d:1" href="https://github.com/LaCabraPalMonte/PBS-Editor/releases" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7c-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6a3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.8V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></span>
+        <div>
+          <h3>GitHub</h3>
+          <p>Todas las versiones publicadas, con sus notas, y el código de esta web.</p>
+        </div>
+        <span class="more">Ver versiones <svg aria-hidden="true"><use href="#i-out"/></svg></span>
+      </a>
+    </div>
+    <p class="credits"><b>Desarrollo:</b> LaCabraPalMonte · <b>Base del proyecto:</b> Sky y dpertierra · <b>Icono:</b> FireFalcon_7</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#inicio"><svg aria-hidden="true"><use href="#mark"/></svg>PBS Editor</a>
+        <p>Editor visual gratuito para los archivos PBS de Pokémon Essentials v21. Hecho por LaCabraPalMonte.</p>
+        <a class="btn btn-primary btn-sm" href="https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Setup.exe"><svg aria-hidden="true"><use href="#i-down"/></svg>Descargar para Windows</a>
+      </div>
+      <nav aria-label="Secciones">
+        <h2>Web</h2>
+        <ul>
+          <li><a href="#funciones">Funciones</a></li>
+          <li><a href="#capturas">Capturas</a></li>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#descarga">Descarga</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Comunidad y código">
+        <h2>Comunidad</h2>
+        <ul>
+          <li><a href="https://discord.gg/WQEmUtgner" rel="noopener">Discord</a></li>
+          <li><a href="https://x.com/PokemonOlympus" rel="noopener">X · @PokemonOlympus</a></li>
+          <li><a href="https://github.com/LaCabraPalMonte/PBS-Editor" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/LaCabraPalMonte/PBS-Editor/releases" rel="noopener">Versiones</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal">
+      <p>© 2026 LaCabraPalMonte. PBS Editor es un proyecto fan hecho sin ánimo de lucro. Pokémon es una marca registrada de Nintendo, Game Freak y The Pokémon Company. No está afiliado oficialmente con Pokémon Essentials, Maruno ni las entidades mencionadas.</p>
+      <p>Desarrollo: LaCabraPalMonte · Base del proyecto: Sky y dpertierra · Icono: FireFalcon_7</p>
+    </div>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb" aria-label="Visor de capturas">
+  <div class="lb-top">
+    <span class="lb-count" id="lbCount"></span>
+    <button class="lb-btn" id="lbClose" type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <button class="lb-btn lb-nav lb-prev" id="lbPrev" type="button" aria-label="Captura anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <img id="lbImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
+    <button class="lb-btn lb-nav lb-next" id="lbNext" type="button" aria-label="Captura siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+  <p class="lb-cap"><span id="lbCap" aria-live="polite"></span><small>← → para cambiar de captura · Esc para cerrar</small></p>
+</dialog>
+
+<script src="js/main.js" defer></script>
 </body>
 </html>
