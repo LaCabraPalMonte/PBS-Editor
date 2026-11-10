@@ -1,5 +1,5 @@
 {
-    "version": "1.4.0",
+    "version": "1.4.1",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Launcher renovado: tus proyectos en cards con nombre, icono y versión del juego, y basta con arrastrar la carpeta a la ventana. Nuevo en el editor: Localización de cada objeto en el mapa de la región, generador de equipos para entrenadores, asistente para crear megas y formas, y renombrar el ID de objetos, movimientos, habilidades y tipos sin romper nada. Además, muchas mejoras y correcciones."
+    "notes": "Editor de Regiones renovado: mapa ampliado y nítido con zoom, panel siempre a la vista, cada lugar pintado de su color, lista de lugares con buscador, renombrar un lugar entero, pincel y goma para pintar rutas arrastrando, destino de vuelo comprobado, capa con los mapas del juego y comprobaciones que avisan de mapas que no se ven en la región. Corregido: los cambios del Editor de Regiones no llegaban a guardarse en town_map.txt."
 }
