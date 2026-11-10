@@ -1,5 +1,5 @@
 {
-    "version": "1.4.1",
+    "version": "1.4.2",
     "download_url": "https://github.com/LaCabraPalMonte/PBS-Editor/releases/latest/download/PBS_Editor_Release.zip",
-    "notes": "Editor de Regiones renovado: mapa ampliado y nítido con zoom, panel siempre a la vista, cada lugar pintado de su color, lista de lugares con buscador, renombrar un lugar entero, pincel y goma para pintar rutas arrastrando, destino de vuelo comprobado, capa con los mapas del juego y comprobaciones que avisan de mapas que no se ven en la región. Corregido: los cambios del Editor de Regiones no llegaban a guardarse en town_map.txt."
+    "notes": "Actualización de seguridad: el servidor del editor ya solo atiende a su propia ventana (una web abierta en el navegador no puede enviarle peticiones) y los enlaces pbseditor:// no aceptan rutas de red. Recomendada para todos."
 }
